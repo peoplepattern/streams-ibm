@@ -1,0 +1,79 @@
+
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "$license": [
+    "http://www.apache.org/licenses/LICENSE-2.0"
+  ],
+  "id": "#",
+  "type": "object",
+  "javaType": "com.ibm.watson.api.ContentListContainer",
+  "javaInterfaces": ["java.io.Serializable"],
+  "properties": {
+    "contentItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "javaType": "com.ibm.watson.api.ContentItem",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for this content item."
+          },
+          "userid": {
+            "type": "string",
+            "description": "Unique identifier for the author of this content."
+          },
+          "sourceid": {
+            "type": "string",
+            "description": "Identifier for the source of this content. For example, blog123, twitter."
+          },
+          "created": {
+            "type": "integer",
+            "description": "Timestamp that identifies when this content was created. In milliseconds since midnight 1/1/1970 UTC.",
+            "required": "false"
+          },
+          "updated": {
+            "type": "string",
+            "description": "Timestamp that identifies when this content was last updated. In milliseconds since midnight 1/1/1970 UTC.",
+            "required": "false"
+          },
+          "contenttype": {
+            "type": "string",
+            "description": "MIME type of the content, for example, \"text/plain, text/html\". The tags are stripped from HTML content before it is analyzed. Other MIME types are processed as is.",
+            "default": "text/plain"
+          },
+          "charset": {
+            "type": "string",
+            "description": "Character set of the text, for example, \"UTF-8\"",
+            "required": "false"
+          },
+          "language": {
+            "type": "string",
+            "description": "Language identifier (two-letter ISO 639-1 identifier). Currently only English content (en) is supported.",
+            "default": "en"
+          },
+          "content": {
+            "type": "string",
+            "description": "Content to be analyzed. Up to 20MB of content is supported.",
+            "default": "en"
+          },
+          "parentid": {
+            "type": "string",
+            "description": "Unique id of the parent content item. Used to identify hierarchical relationships between posts/replies, messages/replies, etc.",
+            "default": "en"
+          },
+          "reply": {
+            "type": "boolean",
+            "description": "Indicates whether this content item is a reply to another content item.,",
+            "default": "false"
+          },
+          "parentid": {
+            "type": "boolean",
+            "description": "Indicates whether this content item is a forwarded/copied version of another content item.",
+            "default": "false"
+          }
+        }
+      }
+    }
+  }
+}

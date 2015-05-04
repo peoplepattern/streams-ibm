@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "$license": [
+    "http://www.apache.org/licenses/LICENSE-2.0"
+  ],
+  "id": "#",
+  "type": "object",
+  "javaType": "com.ibm.watson.api.PersonalityInsights",
+  "javaInterfaces": ["java.io.Serializable"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The unique identifier for which these characteristics were computed, from the \"userid\" field of the input ContentItems."
+    },
+    "source": {
+      "type": "string",
+      "description": "The source for which these characteristics were computed, from the \"sourceid\" field of the input ContentItems."
+    },
+    "word_count": {
+      "type": "integer",
+      "description": "The number of words found in the input."
+    },
+    "word_count_message": {
+      "type": "string",
+      "description": "A message indicating the number of words found and where that value falls in the range of required/suggested number of words.",
+      "required": "false"
+    },
+    "tree": {
+      "type": "object",
+      "javaType": "com.ibm.watson.api.TraitTree",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The id of the characteristic, globally unique."
+        },
+        "name": {
+          "type": "string",
+          "description": "The user-displayable name of the characteristic."
+        },
+        "percentage": {
+          "type": "double",
+          "description": "The normalized value of the characteristic, from 0-1. For example, if the percentage for Openness is 0.25, you scored in the 25th percentile. You are more open than 24% of the population and less open than 74% of the population."
+        },
+        "sampling_error": {
+          "type": "double",
+          "description": "Indicates the sampling error of the percentage, based on the number of words in the input. The number defines a 95% confidence interval around the percentage. For example, the sampling error is 4% and percentage is 61%. It is 95% likely that the actual percentage value is between 57% and 65% if more words are given.",
+          "required": "false"
+        },
+        "children": {
+          "type": "array",
+          "required": "false",
+          "items": {
+            "type": "object",
+            "javaType": "com.ibm.watson.api.TraitTree"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "$license": [
+    "http://www.apache.org/licenses/LICENSE-2.0"
+  ],
+  "id": "#",
+  "type": "object",
+  "javaType": "com.ibm.alchemy.api.Sentiment",
+  "javaInterfaces": ["java.io.Serializable"],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "OK",
+        "ERROR"
+      ],
+      "description": "success / failure status indicating whether the request was processed."
+    },
+    "statusInfo": {
+      "type": "string",
+      "enum": [
+        "invalid-api-key",
+        "cannot-retrieve",
+        "page-is-not-html",
+        "author-not-found:cannot-locate",
+        "author-not-found:multiple-candidates"
+      ],
+      "description": "failure status information (sent only if \"status\" == \"ERROR\")"
+    },
+    "url": {
+      "type": "string",
+      "description": "http url information was requested for."
+    },
+    "authors": {
+      "type": "array",
+      "description": "authors",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "$license": [
+    "http://www.apache.org/licenses/LICENSE-2.0"
+  ],
+  "id": "#",
+  "type": "object",
+  "javaType": "com.ibm.alchemy.api.Keywords",
+  "javaInterfaces": ["java.io.Serializable"],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "OK",
+        "ERROR"
+      ],
+      "description": "success / failure status indicating whether the request was processed."
+    },
+    "statusInfo": {
+      "type": "string",
+      "enum": [
+        "invalid-api-key",
+        "cannot-retrieve",
+        "page-is-not-html"
+      ],
+      "description": "failure status information (sent only if \"status\" == \"ERROR\")"
+    },
+    "url": {
+      "type": "string",
+      "description": "http url information was requested for."
+    },
+    "keywords": {
+      "type": "array",
+      "description": "authors",
+      "items": {
+        "type": "object",
+        "javaType": "com.ibm.alchemy.api.Keyword",
+        "javaInterfaces": ["java.io.Serializable"],
+        "properties": {
+          "relevance": {
+            "type": "number",
+            "description": "relevance score for a detected entity.  Possible values: (0.0 - 1.0)   [1.0 = most relevant]"
+          },
+          "text": {
+            "type": "string",
+            "description": "the detected entity text."
+          },
+          "sentiment": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "positive",
+                  "negative",
+                  "neutral"
+                ]
+              },
+              "score": {
+                "type": "number",
+                "description": "sentiment strength (0.0 == neutral)"
+              },
+              "mixed": {
+                "type": "number",
+                "description": "whether sentiment is mixed (both positive and negative) (1 == mixed)"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

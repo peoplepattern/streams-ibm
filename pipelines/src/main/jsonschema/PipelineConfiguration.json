@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "$license": [
+    "http://www.apache.org/licenses/LICENSE-2.0"
+  ],
+  "type": "object",
+  "javaType" : "com.ibm.hackathon.PipelineConfiguration",
+  "javaInterfaces": ["java.io.Serializable"],
+  "properties": {
+    "source": {
+      "javaType": "org.apache.streams.elasticsearch.ElasticsearchReaderConfiguration",
+      "type:": "object"
+    },
+    "peoplepattern": {
+      "javaType": "org.apache.streams.components.http.HttpProcessorConfiguration",
+      "type:": "object"
+    },
+    "alchemy": {
+      "javaType": "org.apache.streams.components.http.HttpProcessorConfiguration",
+      "type:": "object"
+    },
+    "watson": {
+      "javaType": "org.apache.streams.components.http.HttpProcessorConfiguration",
+      "type:": "object"
+    },
+    "destination": {
+      "javaType": "org.apache.streams.elasticsearch.ElasticsearchWriterConfiguration",
+      "type:": "object"
+    }
+  }
+}
