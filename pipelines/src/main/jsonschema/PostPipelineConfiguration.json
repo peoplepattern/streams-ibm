@@ -4,7 +4,7 @@
     "http://www.apache.org/licenses/LICENSE-2.0"
   ],
   "type": "object",
-  "javaType" : "com.ibm.hackathon.PipelineConfiguration",
+  "javaType" : "com.ibm.hackathon.PostPipelineConfiguration",
   "javaInterfaces": ["java.io.Serializable"],
   "properties": {
     "source": {
@@ -16,10 +16,6 @@
       "type:": "object"
     },
     "alchemy": {
-      "javaType": "org.apache.streams.components.http.HttpProcessorConfiguration",
-      "type:": "object"
-    },
-    "watson": {
       "javaType": "org.apache.streams.components.http.HttpProcessorConfiguration",
       "type:": "object"
     },

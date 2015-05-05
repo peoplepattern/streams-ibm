@@ -31,7 +31,7 @@
     },
     "keywords": {
       "type": "array",
-      "description": "authors",
+      "description": "keywords",
       "items": {
         "type": "object",
         "javaType": "com.ibm.alchemy.api.Keyword",
@@ -61,7 +61,7 @@
                 "description": "sentiment strength (0.0 == neutral)"
               },
               "mixed": {
-                "type": "number",
+                "type": "integer",
                 "description": "whether sentiment is mixed (both positive and negative) (1 == mixed)"
               }
             }

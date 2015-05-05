@@ -20,18 +20,20 @@ package com.ibm.hackathon
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node.ObjectNode
-import com.ibm.alchemy.api.{SentimentProcessor, EntitiesProcessor, TaxonomyProcessor, KeywordsProcessor}
+import com.ibm.alchemy.api.{EntitiesProcessor, TaxonomyProcessor, KeywordsProcessor}
+import com.ibm.watson.api.{PersonalityInsightsProcessor, PersonalityInsights, LanguageIdentificationProcessor}
 import org.apache.streams.components.http.HttpProcessorConfiguration
 import org.apache.streams.config.{ComponentConfigurator, StreamsConfigurator}
 import org.apache.streams.converter.{ActivityConverterProcessor, HoconConverterUtil, ActivityConverterUtil, TypeConverterUtil}
 import org.apache.streams.core.{StreamsProcessor, StreamBuilder}
 import org.apache.streams.elasticsearch._
+import org.apache.streams.graph.{GraphWriterConfiguration, GraphPersistWriter}
 import org.apache.streams.hdfs.WebHdfsPersistReader
 import org.apache.streams.jackson.StreamsJacksonMapper
 import org.apache.streams.local.builders.LocalStreamBuilder
 import org.apache.streams.pojo.json.{Image, Activity, Actor}
 import org.apache.streams.twitter.pojo.User
-import com.ibm.hackathon.PostPipelineConfiguration
+import com.ibm.hackathon.ProfilePipelineConfiguration
 import org.slf4j.{Logger, LoggerFactory}
 
 import scala.collection.{mutable, Map}
@@ -41,24 +43,24 @@ import scala.util.{Failure, Success, Try}
 /**
  * adds keywords metadata to documents
  */
-object AlchemyPipeline {
+object WatsonPipeline {
 
   def main(args: Array[String]) = {
-    val job: AlchemyPipeline = new AlchemyPipeline()
+    val job: WatsonPipeline = new WatsonPipeline()
     new Thread(job).start
   }
 }
 
-class AlchemyPipeline(config: PostPipelineConfiguration) extends Runnable with java.io.Serializable {
+class WatsonPipeline(config: ProfilePipelineConfiguration) extends Runnable with java.io.Serializable {
 
   def this() = {
     this(
-      new ComponentConfigurator[PostPipelineConfiguration](classOf[PostPipelineConfiguration])
+      new ComponentConfigurator[ProfilePipelineConfiguration](classOf[ProfilePipelineConfiguration])
         .detectConfiguration(StreamsConfigurator.getConfig)
     )
   }
 
-  private val LOGGER: Logger = LoggerFactory.getLogger(classOf[PostPipelineConfiguration])
+  private val LOGGER: Logger = LoggerFactory.getLogger(classOf[ProfilePipelineConfiguration])
 
   val STREAMS_ID: String = "AlchemyPipeline"
 
@@ -110,20 +112,16 @@ class AlchemyPipeline(config: PostPipelineConfiguration) extends Runnable with j
     val esReaderConfig = mapper.convertValue(config.getSource, classOf[ElasticsearchReaderConfiguration])
     val esPersistReader: ElasticsearchPersistReader = new ElasticsearchPersistReader(esReaderConfig)
 
-    val esWriterConfig = mapper.convertValue(config.getDestination, classOf[ElasticsearchWriterConfiguration])
-    val esPersistWriter: ElasticsearchPersistUpdater = new ElasticsearchPersistUpdater(esWriterConfig)
+    val graphWriterConfig = mapper.convertValue(config.getDestination, classOf[GraphWriterConfiguration])
+    val graphPersistWriter: GraphPersistWriter = new GraphPersistWriter(graphWriterConfig)
 
-    val alchemyConfig = mapper.convertValue(config.getAlchemy, classOf[HttpProcessorConfiguration])
+    val watsonConfig = mapper.convertValue(config.getWatson, classOf[HttpProcessorConfiguration])
 
     var processor : StreamsProcessor = null;
-    if( alchemyConfig.getExtension.endsWith("keywords"))
-      processor = new KeywordsProcessor()
-    if( alchemyConfig.getExtension.endsWith("taxonomy"))
-      processor = new TaxonomyProcessor()
-    if( alchemyConfig.getExtension.endsWith("entities"))
-      processor = new EntitiesProcessor()
-    if( alchemyConfig.getExtension.endsWith("sentiment"))
-      processor = new SentimentProcessor()
+    if( watsonConfig.getExtension.endsWith("language"))
+      processor = new LanguageIdentificationProcessor()
+    if( watsonConfig.getExtension.endsWith("personality"))
+      processor = new PersonalityInsightsProcessor()
 
     val streamConfig: scala.collection.mutable.Map[String,AnyRef] = scala.collection.mutable.Map[String,AnyRef]()
     val timeout: Int = (7 * 24 * 60 * 1000)
@@ -133,10 +131,11 @@ class AlchemyPipeline(config: PostPipelineConfiguration) extends Runnable with j
 
     val javaConfig : java.util.Map[String,Object] = streamConfig.asJava
 
-    val builder: StreamBuilder = new LocalStreamBuilder(1000, javaConfig)
-    builder.newPerpetualStream(ElasticsearchPersistReader.STREAMS_ID, esPersistReader)
-    builder.addStreamsProcessor(KeywordsProcessor.STREAMS_ID, processor, 20, ElasticsearchPersistReader.STREAMS_ID)
-    builder.addStreamsPersistWriter(ElasticsearchPersistWriter.STREAMS_ID, esPersistWriter, 1, KeywordsProcessor.STREAMS_ID)
+    val builder: StreamBuilder = new LocalStreamBuilder(10000, javaConfig)
+    builder.newReadCurrentStream(ElasticsearchPersistReader.STREAMS_ID, esPersistReader)
+    builder.addStreamsProcessor("batch", processor, 1, ElasticsearchPersistReader.STREAMS_ID)
+    builder.addStreamsProcessor("processor", processor, 1, "batch")
+    builder.addStreamsPersistWriter(GraphPersistWriter.STREAMS_ID, graphPersistWriter, 1, "processor")
     builder.start
 
   }

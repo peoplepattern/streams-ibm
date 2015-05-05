@@ -1145,8 +1145,8 @@
           "type": "number",
           "description": "detected score"
         },
-        "mixed": {
-          "type": "number",
+        "confident": {
+          "type": "boolean",
           "description": "confidence"
         }
       }
