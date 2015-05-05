@@ -71,12 +71,14 @@
                 "properties": {
                   "keywords": {
                     "type": "nested",
+                    "include_in_parent": true,
                     "properties": {
                       "relevance": {
                         "type": "string"
                       },
                       "sentiment": {
                         "type": "nested",
+                        "include_in_parent": true,
                         "properties": {
                           "mixed": {
                             "type": "long"
@@ -85,17 +87,20 @@
                             "type": "double"
                           },
                           "type": {
-                            "type": "string"
+                            "type": "string",
+                            "index": "not_analyzed"
                           }
                         }
                       },
                       "text": {
-                        "type": "string"
+                        "type": "string",
+                        "index": "not_analyzed"
                       }
                     }
                   },
                   "language": {
-                    "type": "string"
+                    "type": "string",
+                    "index": "not_analyzed"
                   },
                   "status": {
                     "type": "string"
@@ -107,13 +112,15 @@
                     "type": "string"
                   },
                   "text": {
-                    "type": "string"
+                    "type": "string",
+                    "index": "not_analyzed"
                   },
                   "totalTransactions": {
                     "type": "string"
                   },
                   "url": {
-                    "type": "string"
+                    "type": "string",
+                    "index": "not_analyzed"
                   },
                   "usage": {
                     "type": "string"
@@ -127,6 +134,7 @@
                 "properties": {
                   "entities": {
                     "type": "nested",
+                    "include_in_parent": true,
                     "properties": {
                       "count": {
                         "type": "long"
@@ -134,50 +142,64 @@
                       "disambiguated": {
                         "properties": {
                           "census": {
-                            "type": "string"
+                            "type": "string",
+                            "index": "not_analyzed"
                           },
                           "ciaFactbook": {
-                            "type": "string"
+                            "type": "string",
+                            "index": "not_analyzed"
                           },
                           "crunchbase": {
-                            "type": "string"
+                            "type": "string",
+                            "index": "not_analyzed"
                           },
                           "dbpedia": {
-                            "type": "string"
+                            "type": "string",
+                            "index": "not_analyzed"
                           },
                           "freebase": {
-                            "type": "string"
+                            "type": "string",
+                            "index": "not_analyzed"
                           },
                           "geo": {
-                            "type": "string"
+                            "type": "string",
+                            "index": "not_analyzed"
                           },
                           "geonames": {
-                            "type": "string"
+                            "type": "string",
+                            "index": "not_analyzed"
                           },
                           "musicBrainz": {
-                            "type": "string"
+                            "type": "string",
+                            "index": "not_analyzed"
                           },
                           "name": {
-                            "type": "string"
+                            "type": "string",
+                            "index": "not_analyzed"
                           },
                           "opencyc": {
-                            "type": "string"
+                            "type": "string",
+                            "index": "not_analyzed"
                           },
                           "subType": {
-                            "type": "string"
+                            "type": "string",
+                            "index": "not_analyzed"
                           },
                           "website": {
-                            "type": "string"
+                            "type": "string",
+                            "index": "not_analyzed"
                           },
                           "yago": {
-                            "type": "string"
+                            "type": "string",
+                            "index": "not_analyzed"
                           }
                         }
                       },
                       "knowledgeGraph": {
                         "properties": {
                           "typeHierarchy": {
-                            "type": "string"
+                            "type": "string",
+                            "index": "not_analyzed"
                           }
                         }
                       },
@@ -186,6 +208,7 @@
                       },
                       "sentiment": {
                         "type": "nested",
+                        "include_in_parent": true,
                         "properties": {
                           "mixed": {
                             "type": "long"
@@ -194,15 +217,18 @@
                             "type": "double"
                           },
                           "type": {
-                            "type": "string"
+                            "type": "string",
+                            "index": "not_analyzed"
                           }
                         }
                       },
                       "text": {
-                        "type": "string"
+                        "type": "string",
+                        "index": "not_analyzed"
                       },
                       "type": {
-                        "type": "string"
+                        "type": "string",
+                        "index": "not_analyzed"
                       }
                     }
                   },
@@ -222,7 +248,8 @@
                     "type": "long"
                   },
                   "url": {
-                    "type": "string"
+                    "type": "string",
+                    "index": "not_analyzed"
                   },
                   "usage": {
                     "type": "string"
@@ -279,6 +306,7 @@
                 "properties": {
                   "docSentiment": {
                     "type": "nested",
+                    "include_in_parent": true,
                     "properties": {
                       "mixed": {
                         "type": "long"
@@ -287,7 +315,8 @@
                         "type": "double"
                       },
                       "type": {
-                        "type": "string"
+                        "type": "string",
+                        "index": "not_analyzed"
                       }
                     }
                   },
@@ -310,7 +339,8 @@
                     "type": "long"
                   },
                   "url": {
-                    "type": "string"
+                    "type": "string",
+                    "index": "not_analyzed"
                   },
                   "usage": {
                     "type": "string"
@@ -336,12 +366,14 @@
                   },
                   "taxonomy": {
                     "type": "nested",
+                    "include_in_parent": true,
                     "properties": {
                       "confident": {
                         "type": "boolean"
                       },
                       "label": {
-                        "type": "string"
+                        "type": "string",
+                        "index": "not_analyzed"
                       },
                       "score": {
                         "type": "double"
@@ -355,7 +387,8 @@
                     "type": "long"
                   },
                   "url": {
-                    "type": "string"
+                    "type": "string",
+                    "index": "not_analyzed"
                   },
                   "usage": {
                     "type": "string"

@@ -20,7 +20,4 @@ docker run -d --name elasticsearch1 -p 9200:9200 -p 9300:9300 -e PLUGINS=mobz/el
 
 docker run -d --name elasticsearch2 -p 9201:9200 -p 9301:9300 quay.io/peoplepattern/elasticsearch:1.5.0
 
-nano linkurious/config/production.json
-
-/linkurious.sh.command start
 

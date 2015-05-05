@@ -5,7 +5,7 @@ digraph g {
   //presentation
   splines = true;
   overlap = false;
-  rankdir = LR;
+  rankdir = TB;
   
   //sources
   subgraph cluster_twitter {
@@ -14,13 +14,12 @@ digraph g {
       graph[style=dotted];
 
 	  twitterfriends [label="/friends"];
-      twitterfollowers [label="/followers"];
       twitterstatuses [label="/statuses"];
   }
 
   subgraph cluster_watson {
 
-  	  label = "http://api.watson.com";
+  	  label = "http://gateway.watsonplatform.net";
       graph[style=dotted];
 
   	  personalityinsights [label="/v2/profile"];
@@ -31,6 +30,7 @@ digraph g {
   	  label = "http://access.alchemyapi.com/calls";
       graph[style=dotted];
 
+      sentiment [label="/url/URLGetTextSentiment"];
       entities [label="/url/URLGetRankedNamedEntities"];
       keywords [label="/url/URLGetRankedKeywords"];
       taxonomy [label="/url/URLGetRankedTaxonomy"];
@@ -47,9 +47,9 @@ digraph g {
 	    esposts [label="/activity"];
 	  }
 
-	  subgraph cluster_espeopledb {
-        label = "/peopledb";
-        espages [label="/actor"];
+	  subgraph cluster_esdisambiguated {
+        label = "/disambiguated";
+        esdisambiguated [label="/disambiguated"];
       }
   }
 
@@ -65,12 +65,9 @@ digraph g {
       neofollows -> neopages [style=dotted];
   }
 
-  neopages -> espages;
-
-  espages -> PersonalityInsightsPipeline;
-    personalityinsights -> PersonalityInsightsPipeline [style=dotted];
-    PersonalityInsightsPipeline -> neopages;
-
+  esposts -> PersonalityInsightsPipeline;
+  personalityinsights -> PersonalityInsightsPipeline [style=dotted];
+  PersonalityInsightsPipeline -> neopages;
 
   esposts -> EntitiesPipeline;
   entities -> EntitiesPipeline [style=dotted];
@@ -84,9 +81,14 @@ digraph g {
   taxonomy -> TaxonomyPipeline [style=dotted];
   TaxonomyPipeline -> esposts;
 
+  esposts -> SentimentPipeline;
+  sentiment -> SentimentPipeline [style=dotted];
+  SentimentPipeline -> esposts;
+
+  esposts -> EntityIndexPipeline;
+  EntityIndexPipeline -> esdisambiguated;
+
   twitterfriends -> neofollows;
-  twitterfollowers -> neopages;
-  twitterfollowers -> neofollows;
-  twitterfollowers -> neopages;
+  twitterfriends -> neopages;
   twitterstatuses -> esposts;
 }
