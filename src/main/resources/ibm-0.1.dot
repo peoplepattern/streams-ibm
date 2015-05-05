@@ -17,14 +17,6 @@ digraph g {
       twitterstatuses [label="/statuses"];
   }
 
-  subgraph cluster_watson {
-
-  	  label = "http://gateway.watsonplatform.net";
-      graph[style=dotted];
-
-  	  personalityinsights [label="/v2/profile"];
-  }
-
   subgraph cluster_alchemy {
 
   	  label = "http://access.alchemyapi.com/calls";
@@ -65,23 +57,15 @@ digraph g {
       neofollows -> neopages [style=dotted];
   }
 
-  esposts -> PersonalityInsightsPipeline;
-  personalityinsights -> PersonalityInsightsPipeline [style=dotted];
-  PersonalityInsightsPipeline -> neopages;
-
-  esposts -> EntitiesPipeline;
   entities -> EntitiesPipeline [style=dotted];
   EntitiesPipeline -> esposts;
 
-  esposts -> KeywordsPipeline;
   keywords -> KeywordsPipeline [style=dotted];
   KeywordsPipeline -> esposts;
 
-  esposts -> TaxonomyPipeline;
   taxonomy -> TaxonomyPipeline [style=dotted];
   TaxonomyPipeline -> esposts;
 
-  esposts -> SentimentPipeline;
   sentiment -> SentimentPipeline [style=dotted];
   SentimentPipeline -> esposts;
 
