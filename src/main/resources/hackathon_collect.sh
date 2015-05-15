@@ -15,9 +15,6 @@ docker run --name friends.graph -v `pwd`/streams-ibm:/streams quay.io/peoplepatt
 # Collect statuses from friends
 docker run --name friends.history -v `pwd`/streams-ibm:/streams quay.io/peoplepattern/twitter-history-elasticsearch:latest java -Dlogback.configurationFile=/streams/logback.xml -Dconfig.file=/streams/pipelines/src/main/resources/friends.statuses.conf -cp twitter-follow-graph-0.2-SNAPSHOT.jar org.apache.streams.example.twitter.TwitterHistoryElasticsearch
 
-# Apply Personality Insights Enrichment
-docker run --name users.personality -v `pwd`/streams-ibm:/streams quay.io/peoplepattern/streams-ibm:latest java -Dlogback.configurationFile=/streams/logback.xml -Dconfig.file=/streams/pipelines/src/main/resources/reindex.conf -cp elasticsearch-reindex-0.2-incubating-SNAPSHOT.jar org.apache.streams.elasticsearch.example.ElasticsearchReindex
-
 # Collect friends of friends
 docker run --name followers.history -v `pwd`/streams-ibm:/streams quay.io/peoplepattern/twitter-history-elasticsearch:latest java -Dlogback.configurationFile=/streams/logback.xml -Dconfig.file=/streams/pipelines/src/main/resources/followers.conf -cp twitter-follow-graph-0.2-incubating-SNAPSHOT.jar org.apache.streams.example.graph.TwitterFollowGraph
 
