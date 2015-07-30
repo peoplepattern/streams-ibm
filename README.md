@@ -21,6 +21,8 @@ Building
 ====================
 To build from source code:
 
+    export MAVEN_OPTS="-Xmx3g -XX:MaxPermSize=512m"
+    
     git clone https://github.com/apache/incubator-streams-master
     
     cd incubator-streams-master
@@ -35,13 +37,17 @@ To build from source code:
     
     mvn clean install
     
+      (use -Dmaven.test.skip.exec=true unless you are patient)
+    
     cd ..
     
     git clone https://github.com/apache/incubator-streams-examples
     
     cd incubator-streams-examples
-        
+      
     mvn clean install
+    
+      (use -Dmaven.test.skip=true unless you are patient)
     
     cd ..
     
