@@ -77,6 +77,51 @@
               "doc_values": true
             }
           }
+        },
+        {
+          "floats": {
+            "match": "*",
+            "match_mapping_type": "float",
+            "mapping": {
+              "doc_values": true
+            }
+          }
+        },
+        {
+          "doubles": {
+            "match": "*",
+            "match_mapping_type": "double",
+            "mapping": {
+              "doc_values": true
+            }
+          }
+        },
+        {
+          "longs": {
+            "match": "*",
+            "match_mapping_type": "long",
+            "mapping": {
+              "doc_values": true
+            }
+          }
+        },
+        {
+          "booleans": {
+            "match": "*",
+            "match_mapping_type": "boolean",
+            "mapping": {
+              "doc_values": true
+            }
+          }
+        },
+        {
+          "dates": {
+            "match": "*",
+            "match_mapping_type": "date",
+            "mapping": {
+              "doc_values": true
+            }
+          }
         }
       ]
     }
