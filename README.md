@@ -21,6 +21,14 @@ Building
 ====================
 To build from source code:
 
+    git clone https://github.com/apache/incubator-streams-master
+    
+    cd incubator-streams-master
+    
+    mvn clean install
+    
+    cd ..
+    
     git clone https://github.com/apache/incubator-streams
     
     cd incubator-streams
